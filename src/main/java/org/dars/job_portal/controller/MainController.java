@@ -10,5 +10,25 @@ public class MainController {
 	public String loadHome() {
 		return "home.html";
 	}
+	
+	@GetMapping("/about-us")
+	public String loadAbout() {
+		return "about-us.html";
+	}
+
+	@GetMapping("/contact")
+	public String contact() {
+		return "contact.html";
+	}
+
+	@GetMapping("/privacy-policy")
+	public String services() {
+		return "privacy-policy.html";
+	}
+
+	@GetMapping("/terms")
+	public String terms() {
+		return "terms.html";
+	}
 
 }
