@@ -34,5 +34,5 @@ public class Recruiter {
 	private String confirmPassword;
 	@NotEmpty(message = "* It is Required Field")
 	private String companyName;
-	private boolean verified;
+	private Boolean verified;
 }

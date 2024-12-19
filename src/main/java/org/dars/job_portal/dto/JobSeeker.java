@@ -32,5 +32,5 @@ public class JobSeeker {
 	@Transient
 	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "* Enter minimum 8 charecter, one uppercase, one lowercase, one number and one special charecter")
 	private String confirmPassword;
-	private boolean verified;
+	private Boolean verified;
 }
