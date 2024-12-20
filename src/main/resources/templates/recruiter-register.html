@@ -144,8 +144,8 @@
    </nav>
    <div class="register-container">
        <div class="register-form">
-           <h1>Job Seeker Register</h1>
-           <form action="/jobseeker/register" method="post" th:object="${jobSeeker}">
+           <h1>Recruiter Register</h1>
+           <form action="/recruiter/register" method="post" th:object="${recruiter}">
                <div class="form-group">
                    <label for="name">Name</label>
                    <input type="text" id="name" th:field="*{name}">
@@ -171,9 +171,14 @@
                    <input type="password" id="confirmPassword" th:field="*{confirmPassword}">
                    <span class="error-message" th:errors="*{confirmPassword}"></span>
                </div>
+                <div class="form-group">
+                   <label for="companyName">Company Name</label>
+                   <input type="text" id="companyName" th:field="*{companyName}">
+                   <span class="error-message" th:errors="*{companyName}"></span>
+               </div>
                <button class="register-btn">Register</button>
                <br><br>
-               <p>Are you a Recruiter? Click <a href="/recruiter/register">here</a> to Register</p>
+                <p>Are you a JobSeeker? Click <a href="/jobseeker/register">here</a> to Register</p>
            </form>
        </div>
    </div>
