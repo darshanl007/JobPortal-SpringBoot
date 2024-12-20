@@ -1,6 +1,7 @@
 package org.dars.job_portal.helper;
 
 import org.dars.job_portal.dto.JobSeeker;
+import org.dars.job_portal.dto.Recruiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -28,7 +29,26 @@ public class MyEmailSender {
 			helper.setSubject("Otp for Creating Account with Us");
 
 			Context context = new Context();
-			context.setVariable("jobSeeker", jobSeeker);
+			context.setVariable("x", jobSeeker);
+
+			helper.setText(templateEngine.process("otp-template.html", context), true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mailSender.send(message);
+
+	}
+
+	public void sendOtp(Recruiter recruiter) {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		try {
+			helper.setFrom("darshanl1254@gmail.com", "Job-Portal Application");
+			helper.setTo(recruiter.getEmail());
+			helper.setSubject("Otp for Creating Account with Us");
+
+			Context context = new Context();
+			context.setVariable("x", recruiter);
 
 			helper.setText(templateEngine.process("otp-template.html", context), true);
 		} catch (Exception e) {
