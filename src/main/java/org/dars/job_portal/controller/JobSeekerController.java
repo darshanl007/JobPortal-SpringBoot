@@ -39,13 +39,13 @@ public class JobSeekerController {
 	}
 
 	@PostMapping("/otp")
-	public String otp(@RequestParam("otp") int otp, @RequestParam("id") int id) {
-		return seekerService.otp(otp, id);
+	public String otp(@RequestParam("otp") int otp, @RequestParam("id") int id, HttpSession session) {
+		return seekerService.otp(otp, id, session);
 	}
 
 	@GetMapping("/resend-otp/{id}")
-	public String resendOtp(@PathVariable Integer id) {
-		return seekerService.resendOtp(id);
+	public String resendOtp(@PathVariable Integer id, HttpSession session) {
+		return seekerService.resendOtp(id, session);
 	}
 
 }
