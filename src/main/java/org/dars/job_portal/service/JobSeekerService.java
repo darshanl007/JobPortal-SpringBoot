@@ -1,7 +1,10 @@
 package org.dars.job_portal.service;
 
+import java.util.Random;
+
 import org.dars.job_portal.dto.JobSeeker;
 import org.dars.job_portal.dto.Recruiter;
+import org.dars.job_portal.helper.MyEmailSender;
 import org.dars.job_portal.repository.JobSeekerRepository;
 import org.dars.job_portal.repository.RecruiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class JobSeekerService {
 
 	@Autowired
 	RecruiterRepository recruiterRepository;
+
+	@Autowired
+	MyEmailSender emailSender;
 
 	public String register(JobSeeker jobSeeker, ModelMap map) {
 		map.put("jobSeeker", jobSeeker);
@@ -44,10 +50,34 @@ public class JobSeekerService {
 			return "jobseeker-register.html";
 
 		else {
+			jobSeeker.setOtp(new Random().nextInt(1000, 10000));
 			jobSeeker.setVerified(false);
 			seekerRepository.save(jobSeeker);
-			return "home.html";
+			System.err.println(jobSeeker.getOtp());
+			emailSender.sendOtp(jobSeeker);
+			return "redirect:/jobseeker/otp/" + jobSeeker.getId();
 		}
+	}
+
+	public String otp(int otp, int id) {
+		JobSeeker jobSeeker = seekerRepository.findById(id).orElseThrow();
+		if (jobSeeker.getOtp() == otp) {
+			jobSeeker.setVerified(true);
+			seekerRepository.save(jobSeeker);
+			return "redirect:/";
+		} else {
+			return "redirect:/jobseeker/otp/" + jobSeeker.getId();
+		}
+	}
+
+	public String resendOtp(Integer id) {
+		JobSeeker jobSeeker = seekerRepository.findById(id).orElseThrow();
+		jobSeeker.setOtp(new Random().nextInt(1000, 10000));
+		jobSeeker.setVerified(false);
+		seekerRepository.save(jobSeeker);
+		System.err.println(jobSeeker.getOtp());
+		emailSender.sendOtp(jobSeeker);
+		return "redirect:/jobseeker/otp/" + jobSeeker.getId();
 	}
 
 }
