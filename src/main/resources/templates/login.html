@@ -68,6 +68,17 @@
 			background-size: cover;
 			background-position: center;
 		}
+		.message {
+			position: fixed;
+			top: 80px;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 1001;
+			padding: 15px;
+			border-radius: 5px;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+			background-color: white;
+		}
 		.main-container {
 			flex: 1;
 			display: flex;
@@ -193,6 +204,13 @@
 			<a href="/jobseeker/register"><button class="nav-btn register-btn">Register</button></a>
 		</div>
 	</nav>
+	
+	<div class="message" th:if="${session.success != null || session.failure != null}">
+            <h3 style="color: green;" th:text="${session.success}"></h3>
+            <h3 style="color:red" th:text="${session.failure}"></h3>
+            <th:block th:text="${@messageRemover.remove()}"></th:block>
+     </div>
+        
 	<div class="main-container">
 		<div class="container">
 			<h1 class="text-center mb-4" style="position: relative; top: -12px; color: #2c3e50;">Login</h1>
@@ -200,7 +218,7 @@
 				<form action="/login" method="post">
 					<div class="mb-3">
 						<label for="email" class="form-label">Email or Phone Number:</label>
-						<input type="text" class="form-control" id="email" name="email" required placeholder="Enter email or phone number">
+						<input type="text" class="form-control" id="email" name="emph" required placeholder="Enter email or phone number">
 					</div>
 					<div class="mb-3">
 						<label for="password" class="form-label">Password:</label>
@@ -227,5 +245,15 @@
 			<p class="footer-text">© 2024 JobPortal. All rights reserved.</p>
 		</div>
 	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const message = document.querySelector('.message');
+			if (message) {
+				setTimeout(function() {
+					message.style.display = 'none';
+				}, 3000);
+			}
+		});
+	</script>	
 </body>
 </html>

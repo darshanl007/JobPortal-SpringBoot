@@ -48,4 +48,14 @@ public class JobSeekerController {
 		return seekerService.resendOtp(id, session);
 	}
 
+	@GetMapping("/home")
+	public String loadHome(HttpSession session) {
+		if (session.getAttribute("jobSeeker") != null) {
+			return "jobseeker-home.html";
+		} else {
+			session.setAttribute("failure", "Invalid Session, Login Again");
+			return "redirect:/login";
+		}
+	}
+
 }
