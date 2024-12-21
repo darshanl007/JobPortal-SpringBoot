@@ -30,5 +30,10 @@ public class MainController {
 	public String terms() {
 		return "terms.html";
 	}
+	
+	@GetMapping("/login")
+	public String loadLogin() {
+		return "login.html";
+	}
 
 }
