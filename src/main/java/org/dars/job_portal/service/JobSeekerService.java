@@ -3,7 +3,7 @@ package org.dars.job_portal.service;
 import java.util.Random;
 
 import org.dars.job_portal.dto.JobSeeker;
-import org.dars.job_portal.dto.Recruiter;
+import org.dars.job_portal.helper.AES;
 import org.dars.job_portal.helper.MyEmailSender;
 import org.dars.job_portal.repository.JobSeekerRepository;
 import org.dars.job_portal.repository.RecruiterRepository;
@@ -13,7 +13,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 
 @Service
 public class JobSeekerService {
@@ -52,6 +51,7 @@ public class JobSeekerService {
 		else {
 			jobSeeker.setOtp(new Random().nextInt(1000, 10000));
 			jobSeeker.setVerified(false);
+			jobSeeker.setPassword(AES.encrypt(jobSeeker.getPassword()));
 			seekerRepository.save(jobSeeker);
 			System.err.println(jobSeeker.getOtp());
 			emailSender.sendOtp(jobSeeker);

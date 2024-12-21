@@ -3,6 +3,7 @@ package org.dars.job_portal.service;
 import java.util.Random;
 
 import org.dars.job_portal.dto.Recruiter;
+import org.dars.job_portal.helper.AES;
 import org.dars.job_portal.helper.MyEmailSender;
 import org.dars.job_portal.repository.JobSeekerRepository;
 import org.dars.job_portal.repository.RecruiterRepository;
@@ -45,6 +46,7 @@ public class RecruiterService {
 		else {
 			recruiter.setOtp(new Random().nextInt(1000, 10000));
 			recruiter.setVerified(false);
+			recruiter.setPassword(AES.encrypt(recruiter.getPassword()));
 			recruiterRepository.save(recruiter);
 			System.err.println(recruiter.getOtp());
 			emailSender.sendOtp(recruiter);
