@@ -2,9 +2,11 @@ package org.dars.job_portal.service;
 
 import java.util.Random;
 
+import org.dars.job_portal.dto.Job;
 import org.dars.job_portal.dto.Recruiter;
 import org.dars.job_portal.helper.AES;
 import org.dars.job_portal.helper.MyEmailSender;
+import org.dars.job_portal.repository.JobRepository;
 import org.dars.job_portal.repository.JobSeekerRepository;
 import org.dars.job_portal.repository.RecruiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class RecruiterService {
 
 	@Autowired
 	RecruiterRepository recruiterRepository;
+
+	@Autowired
+	JobRepository jobRepository;
 
 	@Autowired
 	MyEmailSender emailSender;
@@ -78,6 +83,28 @@ public class RecruiterService {
 		emailSender.sendOtp(recruiter);
 		session.setAttribute("success", "OTP Resent Success");
 		return "redirect:/recruiter/otp/" + recruiter.getId();
+	}
+
+	public String loadJob(HttpSession session) {
+		if (session.getAttribute("recruiter") != null) {
+			return "post-job.html";
+		} else {
+			session.setAttribute("failure", "Invalid Session, Login Again");
+			return "redirect:/login";
+		}
+	}
+
+	public String loadJob(Job job, HttpSession session) {
+		if (session.getAttribute("recruiter") != null) {
+			Recruiter recruiter = (Recruiter) session.getAttribute("recruiter");
+			job.setRecruiter(recruiter);
+			jobRepository.save(job);
+			session.setAttribute("success", "Job Posted Success");
+			return "redirect:/recruiter/home";
+		} else {
+			session.setAttribute("failure", "Invalid Session, Login Again");
+			return "redirect:/login";
+		}
 	}
 
 }

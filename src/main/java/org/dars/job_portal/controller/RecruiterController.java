@@ -1,5 +1,6 @@
 package org.dars.job_portal.controller;
 
+import org.dars.job_portal.dto.Job;
 import org.dars.job_portal.dto.Recruiter;
 import org.dars.job_portal.service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,4 +59,15 @@ public class RecruiterController {
 			return "redirect:/login";
 		}
 	}
+
+	@GetMapping("/post-job")
+	public String postJob(HttpSession session) {
+		return service.loadJob(session);
+	}
+
+	@PostMapping("/post-job")
+	public String postJob(Job job, HttpSession session) {
+		return service.loadJob(job, session);
+	}
+
 }
