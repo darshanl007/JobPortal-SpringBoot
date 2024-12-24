@@ -70,4 +70,9 @@ public class RecruiterController {
 		return service.loadJob(job, session);
 	}
 
+	@GetMapping("/manage-jobs")
+	public String manageJob(HttpSession session, ModelMap map) {
+		return service.manageJob(session, map);
+	}
+
 }

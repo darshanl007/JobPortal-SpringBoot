@@ -1,6 +1,7 @@
 package org.dars.job_portal.service;
 
 import java.util.Random;
+import java.util.List;
 
 import org.dars.job_portal.dto.Job;
 import org.dars.job_portal.dto.Recruiter;
@@ -11,6 +12,7 @@ import org.dars.job_portal.repository.JobSeekerRepository;
 import org.dars.job_portal.repository.RecruiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 
 import jakarta.servlet.http.HttpSession;
@@ -104,6 +106,23 @@ public class RecruiterService {
 		} else {
 			session.setAttribute("failure", "Invalid Session, Login Again");
 			return "redirect:/login";
+		}
+	}
+
+	public String manageJob(HttpSession session, ModelMap map) {
+		if (session.getAttribute("recruiter") != null) {
+			Recruiter recruiter = (Recruiter) session.getAttribute("recruiter");
+			List<Job> jobs = jobRepository.findByRecruiter(recruiter);
+			if (jobs.isEmpty()) {
+				session.setAttribute("failure", "No Jobs Added Yet");
+				return "redirect:/recruiter/home";
+			} else {
+				map.put("jobs", jobs);
+				return "recruiter-jobs.html";
+			}
+		} else {
+			session.setAttribute("failure", "Invalid Session, Login Again");
+			return "redirect:/";
 		}
 	}
 

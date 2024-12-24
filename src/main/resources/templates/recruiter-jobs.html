@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Recruiter Jobs</title>
+</head>
+<body>
+	<div align="center">
+		<div class="message"
+			th:if="${session.success != null || session.failure != null}">
+			<h3 style="color: green;" th:text="${session.success}"></h3>
+			<h3 style="color: red" th:text="${session.failure}"></h3>
+			<th:block th:text="${@messageRemover.remove()}"></th:block>
+		</div>
+		
+		<h1>JOBS</h1>
+		
+		<table border="1">
+			<tr>
+				<th>Company Name</th>
+				<th>Role</th>
+				<th>Package</th>
+				<th>Description</th>
+				<th>Experience Required</th>
+				<th>Skills Required</th>
+				<th>Location</th>
+				<th>Recruiter Name</th>
+				<th>Contact</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+
+			<tr th:each="job:${jobs}">
+				<td th:text="${job.recruiter.companyName}"></td>
+				<td th:text="${job.role}">Role</td>
+				<td th:text="${job.ctc}"></td>
+				<td th:text="${job.description}"></td>
+				<td th:text="${job.experience}"></td>
+				<td th:text="${job.skills}"></td>
+				<td th:text="${job.location}"></td>
+				<td th:text="${job.recruiter.name}"></td>
+				<td th:text="${job.recruiter.email}">Contact</td>
+				<td><button>Edit</button></th>
+				<td><button>Delete</button></th>
+			</tr>
+		</table>
+		<br>
+		<a href="/recruiter/home"><button>Home</button></a>
+	</div>
+</body>
+</html>
