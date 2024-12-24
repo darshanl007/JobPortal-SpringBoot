@@ -75,4 +75,9 @@ public class RecruiterController {
 		return service.manageJob(session, map);
 	}
 
+	@GetMapping("/delete-job/{id}")
+	public String deleteJob(@PathVariable("id") int id, HttpSession session) {
+		return service.deleteJob(id, session);
+	}
+
 }

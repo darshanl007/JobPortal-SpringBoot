@@ -126,4 +126,15 @@ public class RecruiterService {
 		}
 	}
 
+	public String deleteJob(int id, HttpSession session) {
+		if (session.getAttribute("recruiter") != null) {
+			jobRepository.deleteById(id);
+			session.setAttribute("failure", "Job Removed Success");
+			return "redirect:/recruiter/home";
+		} else {
+			session.setAttribute("failure", "Invalid Session,Login Again");
+			return "redirect:/login";
+		}
+	}
+
 }
